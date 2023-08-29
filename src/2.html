@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <video id="video" style="width:100%" controls
+        crossorigin="anonymous"
+        src="https://mp-85db0007-db1f-4b93-821a-202c33c32a3d.cdn.bspapp.com/cloudstorage/ad972f01-6db4-42ca-92c2-99cfedf2eb5d.mp4"></video>
+    <script>
+        // navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia
+        const video = document.getElementById("video");
+        console.log(getComputedStyle(video));
+        const { width, height } = getComputedStyle(video)
+        console.log(width, height)
+        const canvas = document.createElement("canvas")
+        canvas.crossOrigin = 'anonymous'
+        canvas.width = +(width.slice(0, -2))
+        canvas.height = +(height.slice(0, -2))
+        const ctx = canvas.getContext("2d")
+        document.body.appendChild(canvas)
+        video.ontimeupdate = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
+        }
+
+        video.onpause = () => {
+            let dataUrl = canvas.toDataURL();
+            const binary = window.atob(dataUrl.split(",")[1]);
+            const array = [];
+            for (let i = 0; i < binary.length; i++) {
+                array.push(binary.charCodeAt(i))
+            }
+            const res = new Blob([new Uint8Array(array)], { type: 'image/gif' })
+            const a = document.createElement('a')
+            const filename = '12323.gif'
+            a.download = filename
+            a.href = URL.createObjectURL(res)
+            a.click()
+            a.remove()
+            canvas.remove()
+            URL.revokeObjectURL(a.href)
+            const stream = canvas.captureStream()
+            console.log(stream)
+            // const binary = window.atob(dataUrl.split(",")[1]);
+            // const array = [];
+            // for (let i = 0; i < binary.length; i++) {
+            //     array.push(binary.charCodeAt(i))
+            // }
+            // const res = new Blob([new Uint8Array(array)], { type: 'image/gif' })
+            // const filename = random_string(8)
+            // a.download = filename
+            // a.href = URL.createObjectURL(res)
+            // a.click()
+            // a.remove()
+            // canvas.remove()
+            // URL.revokeObjectURL(a.href)
+        }
+        
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .container {
+        width: 100%;
+        column-count: 3;
+        column-gap: 20px;
+    }
+
+    .item {
+        break-inside: avoid;
+        margin-bottom: 20px;
+    }
+
+    .item1 {
+        height: 300px;
+        background: pink;
+    }
+
+    .item2 {
+        height: 100px;
+        background: pink;
+    }
+
+    .item3 {
+        height: 200px;
+        background: pink;
+    }
+
+    @media screen and (min-width: 768px) and (max-width: 1023.98px) {
+        .masonry {
+            width: 96vw;
+            columns: 2;
+            column-gap: 20px;
+        }
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="item item1">1</div>
+        <div class="item item2">2</div>
+        <div class="item item3">3</div>
+        <div class="item item1">1</div>
+        <div class="item item2">2</div>
+        <div class="item item3">3</div>
+    </div>
+    <script type="module">
+        function checkHUIwen2(s) {
+            const sArr = s.split('')
+            const res = []
+            while (sArr.length) {
+                const i = sArr.shift()
+                const j = sArr.pop()
+                if (i && j) {
+                    if (i === j) {
+                        res.push(true)
+                    } else {
+                        res.push(false)
+                    }
+                }
+            }
+            console.log(s, res.every(item => item) ? '是回文' : '不是回文')
+            return res.every(item => item)
+        }
+        const check = function (s) {
+            const len = s.length - 1
+            const min = 0
+            const max = len
+            let left = 0
+            let right = len
+            const res = []
+            const scopy = s
+            while (left <= right) {
+                console.log(left, right)
+                const s1 = s.substring(left, max + 1)
+                const s2 = s.substring(min, right)
+                const s3 = s.substring(left, right + 1)
+                console.log(s1, s2, s3)
+                if (checkHUIwen2(s1)) {
+                    res.push(s1)
+                }
+                if (checkHUIwen2(s2)) {
+                    res.push(s2)
+                }
+                if (checkHUIwen2(s3)) {
+                    res.push(s3)
+                }
+                left++
+                right--
+            }
+            console.log(res)
+            return res[0]
+        }
+
+
+        // function checkHUIwen(s) {
+        //     const mid = ~~((s.length / 2))
+        //     console.log(mid)
+        //     let leftArr = ''
+        //     let rightArr = []
+        //     const res = []
+
+        //     if (s & 1) {
+        //         leftArr = s.substring(0, 2)
+        //         rightArr = (s.substring(mid, s.length)).split('').reverse()
+        //     } else {
+        //         leftArr = s.substring(0, 2)
+        //         rightArr = (s.substring(mid + 1, s.length)).split('').reverse()
+        //     }
+        //     console.log(rightArr,leftArr)
+        //     for (let i = 0; i < leftArr.length; i++) {
+        //        if(leftArr[i] === rightArr[i]) {
+        //         res.push(true)
+        //        }else {
+        //         res.push(false)
+        //        }
+        //     }
+        //     console.log(s,res.every(item=>item) ? '是回文':'不是回文')
+        //     return res.every(item=>item)
+        // }
+
+        check('afabcbas')
+
+        /*
+        中心扩散法处理
+        */
+    </script>
+</body>
+
+</html>
