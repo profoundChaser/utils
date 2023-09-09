@@ -176,7 +176,7 @@ const getUserMediaPermission = () => {
 const blob = new Blob(["wsq", "ewds"], { type: "text/plain" });
 console.log(blob);
 console.log(blob.stream());
-console.log(blob.text());
+console.log(await blob.text());
 const sliceBlob = blob.slice(0, 5);
 console.log(sliceBlob);
 const blobUrl = URL.createObjectURL(blob);
