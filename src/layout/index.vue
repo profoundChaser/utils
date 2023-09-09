@@ -11,6 +11,6 @@
 <style scoped lang="scss">
 #app-container {
     width: 100%;
-
+    color:blue;
 }
 </style>
